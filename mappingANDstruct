@@ -1,0 +1,18 @@
+pragma solidity ^0.6.12;
+
+contract mappingANDstruct {
+    mapping (uint => bool) public myMapping; //el key_type puede ser cualquier tipo de datos basico. El value tambien, pero mas amplio
+    mapping(address => bool) public myMapping2;
+    
+    function setValue(uint _num) public {
+        myMapping[_num] = true;
+    }
+    
+    function setAddress (address _to) public {
+        myMapping2[_to] = true;
+    }
+    /*
+    mapping es una tabla de hashes, que por defecto, manda cada cosa a lo que seria el valor defecto (false para los bool, 
+    0, para los numeros, etc)
+    */
+}
