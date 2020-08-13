@@ -23,3 +23,4 @@ contract SendMoneyExample {
 }
 
 //Hay dos tipos de accounts: externally owned accounts (EOA) y Contract account. No se muy bien la diferencia but ok
+//El msg. hace referencia a la cuenta desde la que se envia algo.
