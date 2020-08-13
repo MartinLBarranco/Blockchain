@@ -2,11 +2,35 @@ pragma solidity ^0.6.12;
 
 contract SatarStopUpdateExample {
     
+    address owner;
+    bool pausado;
+    
+    constructor() public {  // El constructor es algo que se hace en el momente en el que se hace el deploy
+        address owner = msg.sender; // Con esto conseguimos que la direccion "owner" es la persona que hace el deploy.
+    }                               // se hace para que por ejemplola funcion de mandar todo el diner de abajo no la haga cualquiera
+    
+    function setPausado(bool _pausa) public {
+        require(msg.sender == owner, "No puedes cambiar el pausado, no eres el dueño.");
+        pausado = _pausa;
+    }
+    
     function SendMoney() public payable {
         
     }
     
     function withDrawMoney (address payable _to) public {
+        require(msg.sender == owner, "No eres el dueño");
+        require(pausado == true, "El contrato está pausado");
         _to.transfer(address(this).balance);
     }
+    
+    function destruyeContrato (address payable _to)public {  //esto permite destruir el contrato, pero no entiendo lo del address de argumento.
+        require(_to == owner, "You are not the owner");
+        selfdestruct(_to);
+    }
 }
+
+/*
+Para pausar un smart contract, se puede hacer la histria de lo de paused, que junto a un require, permite
+regular la ejecucion de un contrato
+*/
