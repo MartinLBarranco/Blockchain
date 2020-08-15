@@ -14,5 +14,17 @@ contract mappingANDstruct {
     /*
     mapping es una tabla de hashes, que por defecto, manda cada cosa a lo que seria el valor defecto (false para los bool, 
     0, para los numeros, etc)
+    
+    Assert es para:
+    -
+    -
+    -
+    -
+    require es para:
+    -
+    -
+    -
+    -
+    TENGO QUE VOLVER A VER EL VIDEO DONDE SE EXPLICA ESO.
     */
 }
