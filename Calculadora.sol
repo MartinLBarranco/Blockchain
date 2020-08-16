@@ -1,31 +1,22 @@
 pragma solidity 0.6.12;
 
-contract calculadora {
+
+contract mates {
     
     address payable owner;
+    mapping(address => bool) public Registro;
     mapping(address => uint) public Balance;
     
+    
     modifier Seguro() {
-        require(Balance[msg.sender] > 0, "No tienes permiso");
+        require(msg.sender.balance > 0, "No tienes permiso");
+        owner.transfer(1 ether);
         _;
     }
     
     constructor() public {
         owner = msg.sender;
         Balance[owner] = owner.balance;
-    }
-    
-    function sendMoney(address payable _to, uint _amount) public {
-        require(msg.sender == owner, "No eres el dueño");
-        assert(_amount <= Balance[owner]);
-        Balance[_to] += _amount;
-        _to.transfer(_amount);
-        Balance[owner] -= _amount;
-    }
-    
-    function registraCuenta(address payable _nuevaCuenta) public {
-        require(msg.sender == owner, "No tienes permiso para hacer esto");
-        Balance[_nuevaCuenta] = _nuevaCuenta.balance;
     }
     
     function suma(int _sum1, int _sum2) Seguro public returns(int){
@@ -36,7 +27,7 @@ contract calculadora {
         return _sum1-_sum2;
     }
     
-    function multi(int _sum1, int _sum2) public  Seguro returns(int){
+    function multi(int _sum1, int _sum2) public Seguro returns(int){
         return _sum1*_sum2;
     }
     
@@ -50,4 +41,22 @@ contract calculadora {
     function divi(int _sum1, int _sum2) public Seguro returns(int){
         return _sum1/_sum2;
     }
+}
+
+contract calculadora is mates {
+    
+    function registraUsuario(address payable _to) public {
+        require(msg.sender == owner, "No tienes permiso para hacer esto");
+        if (!Registro[_to]) {
+            Registro[_to] = true;
+            Balance[_to] = _to.balance;
+        }
+    }
+    
+    function mandaDinero(address payable _newTo, uint _amount) public {
+        require(msg.sender == owner, "No tienes permiso");
+        assert(_amount < owner.balance);
+        _newTo.transfer(_amount);
+    }
+    
 }
