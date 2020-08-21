@@ -30,7 +30,7 @@ contract SharedAccount {
     }
     
     function esta_registrado(address payable _posibleUsuario) view public returns(bool) {
-        if (!UsuriosRegistrados[_posibleUsuario]) {
+        if (UsuriosRegistrados[_posibleUsuario]) {
             return true;
         } else {
             return false;
